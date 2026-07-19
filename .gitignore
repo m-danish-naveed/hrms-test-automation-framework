@@ -1,0 +1,9 @@
+node_modules/
+reports/
+test-results/
+playwright-report/
+.env
+flaky-history.json
+*.log
+.DS_Store
+.github/

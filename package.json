@@ -1,0 +1,20 @@
+{
+  "name": "orangehrm-playwright-framework",
+  "version": "1.0.0",
+  "description": "Playwright automation framework for the OrangeHRM demo app: UI + API tests, POM, fixtures, data-driven testing, and a flaky-test tracker.",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test tests/ui",
+    "test:api": "playwright test tests/api",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report reports/html-report",
+    "flaky:report": "node scripts/generate-flaky-report.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "ajv": "^8.17.1",
+    "@faker-js/faker": "^8.4.1",
+    "dotenv": "^16.4.5"
+  }
+}

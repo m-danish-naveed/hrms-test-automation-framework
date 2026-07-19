@@ -1,0 +1,37 @@
+[
+  {
+    "case": "valid credentials",
+    "username": "Admin",
+    "password": "admin123",
+    "expected": "success",
+    "tag": "@smoke"
+  },
+  {
+    "case": "wrong password",
+    "username": "Admin",
+    "password": "wrongPass1",
+    "expected": "failure",
+    "tag": "@regression"
+  },
+  {
+    "case": "non-existent user",
+    "username": "NotARealUser",
+    "password": "somePassword1",
+    "expected": "failure",
+    "tag": "@regression"
+  },
+  {
+    "case": "empty username and password",
+    "username": "",
+    "password": "",
+    "expected": "validation",
+    "tag": "@regression"
+  },
+  {
+    "case": "empty password only",
+    "username": "Admin",
+    "password": "",
+    "expected": "validation",
+    "tag": "@regression"
+  }
+]
