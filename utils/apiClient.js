@@ -47,8 +47,20 @@ class ApiClient {
     this._context = await this._browser.newContext({ baseURL: BASE_URL });
     const page = await this._context.newPage();
 
-    await page.goto('/web/index.php/auth/login', { waitUntil: 'domcontentloaded' });
-    await page.locator('input[name="username"]').waitFor({ state: 'visible', timeout: 20000 });
+    // Same resilience pattern as LoginPage.js: explicit generous timeout
+    // (this browser/context is created manually here, outside Playwright's
+    // fixture system, so it does NOT inherit navigationTimeout from
+    // playwright.config.js) plus one retry via reload if the demo is having
+    // a slow moment, instead of failing outright on the first timeout.
+    try {
+      await page.goto('/web/index.php/auth/login', { waitUntil: 'domcontentloaded', timeout: 45000 });
+      await page.locator('input[name="username"]').waitFor({ state: 'visible', timeout: 20000 });
+    } catch (err) {
+      logger.warn('API login page did not appear in time — retrying navigation once.');
+      await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+      await page.locator('input[name="username"]').waitFor({ state: 'visible', timeout: 20000 });
+    }
+
     await page.locator('input[name="username"]').fill(username);
     await page.locator('input[name="password"]').fill(password);
 
